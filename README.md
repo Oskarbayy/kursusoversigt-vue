@@ -1,42 +1,31 @@
-# .
+# Kursusoversigt
 
-This template should help get you started developing with Vue 3 in Vite.
+## Skærmbilleder
 
-## Recommended IDE Setup
+![Oversigt](overview.png)
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+![Detaljeside](detail.png)
 
-## Recommended Browser Setup
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## Komponenter
 
-## Type Support for `.vue` Imports in TS
+**EventFilters**
+Søgefeltet og kategori-dropdownen. Når man skriver eller vælger en kategori, sender den værdien op til oversigten med emit.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+**EventForm**
+Formularen til at oprette et arrangement. Den tjekker at titel, kategori og dato er udfyldt og viser en fejlbesked hvis noget mangler. Ellers sender den dataene videre, så arrangementet bliver tilføjet.
 
-## Customize configuration
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## Søgning og filtrering
 
-## Project Setup
+Søgningen og kategorien er gemt i ref's. Listen der vises er en computed, som filtrerer arrangementerne ud fra dem, så den opdaterer sig automatisk når man skriver eller skifter kategori.
 
-```sh
-npm install
-```
 
-### Compile and Hot-Reload for Development
+## Vue Router
 
-```sh
-npm run dev
-```
+Der er tre routes: `/` er oversigten, `/events/:id` er detaljesiden og `/create` er formularen. Siderne bliver vist i `<RouterView />` i App.vue. Man navigerer med RouterLink, og detaljesiden læser id'et fra URL'en for at finde arrangementet.
 
-### Type-Check, Compile and Minify for Production
 
-```sh
-npm run build
-```
+## HTTP-kald
+
+Når appen starter, henter den posts fra JSONPlaceholder med fetch. Title og body bruges som titel og beskrivelse, og kategori og dato bliver sat lokalt. Mens den henter, står der "Henter arrangementer…". Hvis kaldet fejler, vises en fejlbesked med en "Prøv igen"-knap.
